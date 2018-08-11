@@ -1,0 +1,11 @@
+{
+  "name": "thebookshelf",
+  "version": "1.0.0",
+  "description": "Full stack NodeJS, React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark Ernest R. Matute",
+  "license": "ISC"
+}
