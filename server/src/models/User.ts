@@ -4,6 +4,7 @@ import { IsUsernameTaken } from '../validators/IsUsernameTaken';
 import { ModelInterface } from '../libs/interface/ModelInterface';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Length, ValidationError, ValidationOptions, validate } from 'class-validator';
+import { Book } from './Book';
 
 @Entity()
 export class User implements ModelInterface {
@@ -30,6 +31,9 @@ export class User implements ModelInterface {
   })
   @Column()
   password: String
+
+  @OneToMany(type => Book, book => book.user)
+  books: Book
 
   public validate = async (groups?: ValidationOptions): Promise<Array<ValidationError>> => {
     return await validate(this, groups);
