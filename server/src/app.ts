@@ -5,6 +5,7 @@ import KoaBodyParser from 'koa-bodyparser';
 // Routes
 import { HomeRouter } from './routes/HomeRouter';
 import { UserRouter } from './routes/UserRouter';
+import { BookRouter } from './routes/BookRouter';
 import { AuthRouter } from './routes/AuthRouter';
 
 /**
@@ -41,6 +42,7 @@ export class App {
     this.app.use(new HomeRouter().router.routes());
     this.app.use(new UserRouter().router.routes());
     this.app.use(new AuthRouter().router.routes());
+    this.app.use(new BookRouter().router.routes());
   }
 
 }
