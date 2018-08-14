@@ -4,8 +4,14 @@
   "description": "Full stack NodeJS, React",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start --prefix client",
+    "server": "npm run watch --prefix server",
+    "dev": "concurrently \"npm run server\"  \"npm run client\""
   },
   "author": "Mark Ernest R. Matute",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^3.6.1"
+  }
 }
