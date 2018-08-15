@@ -65,7 +65,34 @@ export class UserSeed extends BaseSeed implements SeederInterface {
         price: '8000',
         user: newUser
       });
-      await this.database.manager.save(Book, [newBook1, newBook2]);
+      const newBook3 = await plainToClass(Book, {
+        name: 'Star Wars Empire Strikes Back 3',
+        author: 'George Lucas',
+        review: 'This is a great movie',
+        pages: 'Pages Sample',
+        rating: 9,
+        price: '8000',
+        user: newUser
+      });
+      const newBook4 = await plainToClass(Book, {
+        name: 'Star Wars Empire Strikes Back 4',
+        author: 'George Lucas',
+        review: 'This is a great movie',
+        pages: 'Pages Sample',
+        rating: 9,
+        price: '8000',
+        user: newUser
+      });
+      const newBook5 = await plainToClass(Book, {
+        name: 'Star Wars Empire Strikes Back 5',
+        author: 'George Lucas',
+        review: 'This is a great movie',
+        pages: 'Pages Sample',
+        rating: 9,
+        price: '8000',
+        user: newUser
+      });
+      await this.database.manager.save(Book, [newBook1, newBook2, newBook3, newBook4, newBook5]);
 
     } catch(e) {
       console.log(e);
