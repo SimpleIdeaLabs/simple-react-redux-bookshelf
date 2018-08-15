@@ -36,6 +36,9 @@ export class Book implements ModelInterface {
   @ManyToOne(type => User, user => user.books)
   user: User
 
+  @Column()
+  userId: number
+
   public validate = async (groups?: ValidationOptions): Promise<Array<ValidationError>> => {
     return await validate(this, groups);
   }

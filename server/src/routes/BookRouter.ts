@@ -27,6 +27,7 @@ export class BookRouter extends BaseRouter implements RouterInterface {
     this.router.get('/', this.showList);
     this.router.post('/', this.saveBook);
     this.router.get('/:id', this.getBook);
+    this.router.get('/:bookId/owner', this.getBookOwner);
   }
 
   /**
@@ -92,6 +93,23 @@ export class BookRouter extends BaseRouter implements RouterInterface {
       // Save
       ctx.status = this.responseCodes.NEW_RESOURCE;
       ctx.body = await this.database.manager.save(Book, bookClass);
+    } catch (e) {
+      console.log(e);
+      ctx.status = this.responseCodes.INTERNAL_ERROR;
+      ctx.body = { errors: e };
+    }
+  }
+
+  /**
+   * Get Book's Owner
+   */
+  public getBookOwner = async (ctx: Context): Promise<any> => {
+    try {
+      const { bookId } = ctx.params;
+      const book = await this.database.manager.findOne(Book, bookId, {
+        relations: ['user']
+      });
+      ctx.body = book;
     } catch (e) {
       console.log(e);
       ctx.status = this.responseCodes.INTERNAL_ERROR;

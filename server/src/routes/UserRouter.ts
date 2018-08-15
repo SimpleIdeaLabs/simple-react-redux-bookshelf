@@ -23,8 +23,9 @@ export class UserRouter extends BaseRouter implements RouterInterface {
    * Set Up routes
    */
   setUpRoutes(): void {
-    this.router.prefix('/users');
+    this.router.prefix('/api/users');
     this.router.get('/', LoggedInOnly, this.showList);
+    this.router.get('/:userId', this.getUser);
     this.router.post('/', this.saveUser);
   }
 
@@ -43,6 +44,23 @@ export class UserRouter extends BaseRouter implements RouterInterface {
       ctx.body = { errors: e };
     }
   }
+
+  /**
+   * Get Single User
+   */
+  public getUser = async(ctx: Context): Promise<any> => {
+    try {
+      const {userId} = ctx.params;
+      const user = await this.database.manager.findOne(User, userId);
+      ctx.status = this.responseCodes.SUCCESS;
+      ctx.body = user;
+    } catch (e) {
+      console.log(e);
+      ctx.status = this.responseCodes.INTERNAL_ERROR;
+      ctx.body = { errors: e };
+    }
+  }
+
 
   /**
    * Save User

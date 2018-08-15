@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const BookItem = (props) => {
   return (
-    <Link to={`/api/books/${props.id}`} className="book_item">
+    <Link to={`/books/${props.id}`} className="book_item">
       <div className="book_header">
         <h2>{props.name}</h2>
       </div>
