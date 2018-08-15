@@ -37,12 +37,21 @@ export const getBookWithReviewer = (id) => {
             book,
             user
           };
-          console.log(payload);
           dispatch({
             type: 'GET_BOOK_WITH_REVIEWER',
             payload: payload
           });
         });
     });
+  }
+}
+
+export const clearBookWithReviewer = () => {
+  return {
+    type: 'CLEAR_BOOK_WITH_REVIEWER',
+    payload: {
+      user: {},
+      book: {}
+    }
   }
 }
