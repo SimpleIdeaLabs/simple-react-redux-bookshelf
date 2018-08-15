@@ -22,7 +22,7 @@ export class AuthRouter extends BaseRouter implements RouterInterface {
    * Set Up routes
    */
   setUpRoutes(): void {
-    this.router.prefix('/auth');
+    this.router.prefix('/api/auth');
     this.router.post('/login', this.doLogin);
   }
 
@@ -51,6 +51,7 @@ export class AuthRouter extends BaseRouter implements RouterInterface {
 
       // Success Login
       ctx.status = this.responseCodes.SUCCESS;
+      ctx.cookies.set('auth', token);
       ctx.body = {
         token: token,
         userData: loggedInUser

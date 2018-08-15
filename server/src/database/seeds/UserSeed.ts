@@ -41,8 +41,8 @@ export class UserSeed extends BaseSeed implements SeederInterface {
 
       // Create user object
       const newUser = await plainToClass(User, {
-        username: 'test',
-        password: await BCryptService.hash('test')
+        username: 'crc',
+        password: await BCryptService.hash('ppwwdd')
       });
       await this.database.manager.save(User, newUser);
 

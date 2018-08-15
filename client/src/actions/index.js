@@ -55,3 +55,23 @@ export const clearBookWithReviewer = () => {
     }
   }
 }
+
+// USER ACTIONS
+export const loginUser = (credentials) => {
+  const request = axios.post(`/api/auth/login`, {
+    username: credentials.username,
+    password: credentials.password
+  }).then((response) => {
+    return response.data;
+  }).catch((e) => {
+    return {
+      token: null,
+      error: 'Login failed'
+    }
+  })
+
+  return {
+    type: 'USER_LOGIN',
+    payload: request
+  }
+}
