@@ -84,6 +84,15 @@ export const updateBook = (id, data) => {
   }
 }
 
+export const deleteBook = (id) => {
+  const request = axios.delete(`/api/books/${id}`)
+    .then((response) => response.data);
+  return {
+    type: 'DELETE_BOOK',
+    payload: { id }
+  }
+}
+
 // USER ACTIONS
 export const loginUser = (credentials) => {
   const request = axios.post(`/api/auth/login`, {

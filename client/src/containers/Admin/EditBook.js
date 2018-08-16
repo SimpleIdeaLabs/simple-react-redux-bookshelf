@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link  } from 'react-router-dom';
-import { getBook, updateBook } from '../../actions';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import { getBook, updateBook, deleteBook } from '../../actions';
 
 class EditBook extends React.PureComponent {
   
@@ -18,10 +20,10 @@ class EditBook extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.books && newProps.books.newBook) {
-      this.props.history.push(`/books/${newProps.books.newBook.id}`);
-    }
+  notify(msg) {
+    toast.success(msg, {
+      position: toast.POSITION.TOP_CENTER
+    });
   }
 
   submitForm = (e) => {
@@ -31,6 +33,14 @@ class EditBook extends React.PureComponent {
       userId: this.props.userData.id
     };
     this.props.updateBook(this.props.match.params.id, payload);
+    this.notify("Book Updated!");
+  }
+
+  deleteBook = () => {
+    const id = this.props.match.params.id;
+    this.props.deleteBook(id);
+    this.notify("Book Deleted!");
+    this.props.history.push('/');
   }
 
   handleInputChange = (e, name) => {
@@ -62,9 +72,10 @@ class EditBook extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.props, 'RENDER');
     return (
       <div className="rl_container article">
+        <ToastContainer />
         <form onSubmit={(e) => this.submitForm(e)}>
           <h2>Edit Review</h2>
           <div className="form_element">
@@ -110,7 +121,7 @@ class EditBook extends React.PureComponent {
           <button type="submit">
             Edit Review  
           </button>
-          <div className="delete_post">
+          <div className="delete_post" onClick={()=>this.deleteBook()}>
             <div className="button">
               Delete Review
             </div>
@@ -123,14 +134,16 @@ class EditBook extends React.PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    book: state.books.book
+    book: state.books.book,
+    deletedBook: state.books.deleteBook
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators({
     getBook,
-    updateBook
+    updateBook,
+    deleteBook
   }, dispatch); 
 }
 

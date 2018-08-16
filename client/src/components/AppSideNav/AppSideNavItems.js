@@ -46,7 +46,7 @@ const AppSideNavItems = ({ user }) => {
       type: 'navItem',
       icon: 'file-text-o',
       text: 'Add reviews',
-      link: '/user/add',
+      link: '/user/add/books',
       restricted: true
     },
     {

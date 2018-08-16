@@ -20,7 +20,7 @@ const Routes = () => {
         <Route path="/books/:id/edit" exact component={Auth(EditBook)} />
         <Route path="/login" exact component={Auth(Login, false)} />
         <Route path="/user/posts" exact component={Auth(UserPosts)} />
-        <Route path="/user/add/book" exact component={Auth(AddBook)} />
+        <Route path="/user/add/books" exact component={Auth(AddBook)} />
       </Switch>
     </Layout>
   )

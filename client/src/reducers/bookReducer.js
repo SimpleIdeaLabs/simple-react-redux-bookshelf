@@ -9,6 +9,9 @@ export default (state={}, action) => {
 
     case 'UPDATE_BOOK':
       return {...state, newBook: action.payload};
+
+    case 'DELETE_BOOK':
+      return {...state, deletedBook: action.payload};
     
     case 'GET_BOOK_WITH_REVIEWER':
       return {

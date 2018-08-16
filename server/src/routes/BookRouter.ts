@@ -28,6 +28,7 @@ export class BookRouter extends BaseRouter implements RouterInterface {
     this.router.post('/', this.saveBook);
     this.router.get('/:id', this.getBook);
     this.router.patch('/:id', this.updateBook);
+    this.router.delete('/:id', this.deleteBook);
     this.router.get('/:bookId/owner', this.getBookOwner);
   }
 
@@ -132,6 +133,22 @@ export class BookRouter extends BaseRouter implements RouterInterface {
         .execute();
       ctx.status = 200;
       ctx.body = book;
+    } catch (e) {
+      console.log(e);
+      ctx.status = this.responseCodes.INTERNAL_ERROR;
+      ctx.body = { errors: e };
+    }
+  }
+
+  /**
+   * Delete Book
+   */
+  public deleteBook = async (ctx: Context): Promise<any> => {
+    try {
+      const { id } = ctx.params;
+      const book = await this.database.manager.delete(Book, id);
+      ctx.status = 200;
+      ctx.body = {};
     } catch (e) {
       console.log(e);
       ctx.status = this.responseCodes.INTERNAL_ERROR;
