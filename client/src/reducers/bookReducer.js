@@ -18,6 +18,12 @@ export default (state={}, action) => {
         user: action.payload.user
       };
 
+    case 'ADD_BOOK':
+      return {
+        ...state,
+        newBook: action.payload
+      }
+
     default:
       return state;
   }

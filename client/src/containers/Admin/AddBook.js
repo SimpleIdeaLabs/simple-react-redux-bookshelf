@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link  } from 'react-router-dom';
+import { addBook } from '../../actions';
+import { bindActionCreators } from 'redux';
 
-class AddReview extends React.Component {
+class AddBook extends React.Component {
   
   state = {
     formData: {
@@ -13,9 +17,19 @@ class AddReview extends React.Component {
     }
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.books && newProps.books.newBook) {
+      this.props.history.push(`/books/${newProps.books.newBook.id}`);
+    }
+  }
+
   submitForm = (e) => {
     e.preventDefault();
-    console.log(this.state.formData)
+    const payload = {
+      ...this.state.formData,
+      userId: this.props.userData.id
+    };
+    this.props.addBook(payload);
   }
 
   handleInputChange = (e, name) => {
@@ -80,4 +94,16 @@ class AddReview extends React.Component {
   }
 }
 
-export default AddReview;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    books: state.books
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return bindActionCreators({
+    addBook
+  }, dispatch); 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBook);
