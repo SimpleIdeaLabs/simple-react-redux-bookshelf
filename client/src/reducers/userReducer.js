@@ -7,6 +7,9 @@ export default (state = {}, action) => {
     case 'USER_SESSION':
       return {...state, login: action.payload};
 
+    case 'USER_POSTS':
+      return {...state, posts: action.payload};
+
     default:
       return state;
   }

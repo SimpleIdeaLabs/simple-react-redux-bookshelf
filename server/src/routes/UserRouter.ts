@@ -3,6 +3,7 @@ import { User } from '../models/User';
 import { plainToClass } from 'class-transformer';
 import { BaseRouter } from '../libs/core/BaseRouter';
 import { BCryptService } from '../services/BCryptService';
+import { JWTService } from '../services/JWTService';
 import { LoggedInOnly } from '../middlewares/LoggedInOnly';
 import { RouterInterface } from '../libs/interface/RouterInterface';
 
@@ -25,6 +26,7 @@ export class UserRouter extends BaseRouter implements RouterInterface {
   setUpRoutes(): void {
     this.router.prefix('/api/users');
     this.router.get('/', LoggedInOnly, this.showList);
+    this.router.get('/posts', this.getUserPosts);
     this.router.get('/:userId', this.getUser);
     this.router.post('/', this.saveUser);
   }
@@ -85,6 +87,31 @@ export class UserRouter extends BaseRouter implements RouterInterface {
       // Save
       ctx.status = this.responseCodes.NEW_RESOURCE;
       ctx.body = await this.database.manager.save(User, userClass);
+    } catch (e) {
+      console.log(e);
+      ctx.status = this.responseCodes.INTERNAL_ERROR;
+      ctx.body = { errors: e };
+    }
+  }
+
+  /**
+   * Get user's posts
+   */
+  public getUserPosts = async (ctx: Context): Promise<any> => {
+    try {
+      let cookie = ctx.request.headers.cookie;
+      if (!cookie) {
+        ctx.status = 401;
+        ctx.body = {
+          error: 'Not logged in'
+        }
+      }
+      cookie = cookie.split('=');
+      const user: any = await JWTService.verify(cookie[1]);
+      const userData = await this.database.manager.findOne(User, user.id, {
+        relations: ['books']
+      });
+      ctx.body = userData.books;
     } catch (e) {
       console.log(e);
       ctx.status = this.responseCodes.INTERNAL_ERROR;

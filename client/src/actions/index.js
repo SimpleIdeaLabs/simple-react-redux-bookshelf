@@ -99,3 +99,13 @@ export const checkAuth = () => {
     payload: request
   }
 }
+
+export const getUserPosts = () => {
+  const request = axios.get(`/api/users/posts`)
+    .then((response) => response.data);
+    
+  return {
+    type: 'USER_POSTS',
+    payload: request
+  }
+}
