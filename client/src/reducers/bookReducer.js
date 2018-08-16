@@ -3,6 +3,12 @@ export default (state={}, action) => {
     
     case 'GET_BOOKS':
       return {...state, books: action.payload};
+
+    case 'GET_BOOK':
+      return {...state, book: action.payload};
+
+    case 'UPDATE_BOOK':
+      return {...state, newBook: action.payload};
     
     case 'GET_BOOK_WITH_REVIEWER':
       return {

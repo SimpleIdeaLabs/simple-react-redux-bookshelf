@@ -65,6 +65,25 @@ export const addBook = (book) => {
   }
 }
 
+export const getBook = (id) => {
+  const request = axios.get(`/api/books/${id}`)
+    .then((response) => response.data);
+  return {
+    type: 'GET_BOOK',
+    payload: request
+  }
+}
+
+export const updateBook = (id, data) => {
+  const request = axios.patch(`/api/books/${id}`, {
+    ...data
+  }).then((response) => response.data);
+  return {
+    type: 'UPDATE_BOOK',
+    payload: request
+  }
+}
+
 // USER ACTIONS
 export const loginUser = (credentials) => {
   const request = axios.post(`/api/auth/login`, {
@@ -103,7 +122,7 @@ export const checkAuth = () => {
 export const getUserPosts = () => {
   const request = axios.get(`/api/users/posts`)
     .then((response) => response.data);
-    
+
   return {
     type: 'USER_POSTS',
     payload: request

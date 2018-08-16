@@ -15,7 +15,7 @@ class UserPosts extends React.Component {
       return (
         <div key={key}>
           <hr />
-          <Link to={`/books/${post.id}`}>
+          <Link to={`/books/${post.id}/edit`}>
             { post.name }
           </Link>
         </div>
