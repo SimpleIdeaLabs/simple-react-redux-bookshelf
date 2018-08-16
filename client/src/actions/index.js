@@ -75,3 +75,18 @@ export const loginUser = (credentials) => {
     payload: request
   }
 }
+
+export const checkAuth = () => {
+  const request = axios.get(`/api/auth/session`)
+    .then((response) => response.data)
+    .catch((e) => {
+      return {
+        token: null,
+        error: 'You are not logged in'
+      } 
+    });
+  return {
+    type: 'USER_SESSION',
+    payload: request
+  }
+}

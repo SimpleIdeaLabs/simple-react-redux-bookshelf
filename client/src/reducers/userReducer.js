@@ -4,6 +4,9 @@ export default (state = {}, action) => {
     case 'USER_LOGIN':
       return {...state, login: action.payload};
 
+    case 'USER_SESSION':
+      return {...state, login: action.payload};
+
     default:
       return state;
   }

@@ -24,6 +24,7 @@ export class AuthRouter extends BaseRouter implements RouterInterface {
   setUpRoutes(): void {
     this.router.prefix('/api/auth');
     this.router.post('/login', this.doLogin);
+    this.router.get('/session', this.getSession);
   }
 
   /**
@@ -61,6 +62,42 @@ export class AuthRouter extends BaseRouter implements RouterInterface {
       console.log(e);
       ctx.status = this.responseCodes.INTERNAL_ERROR;
       ctx.body = { errors: e };
+    }
+  }
+
+  /**
+   * Check User Session
+   */
+  public getSession = async (ctx: Context) => {
+    try {
+      let cookie = ctx.request.headers.cookie;
+      if (!cookie) {
+        ctx.status = 401;
+        ctx.body = {
+          error: 'Not logged in'
+        }
+      }
+      cookie = cookie.split('=');
+      const user:any = await JWTService.verify(cookie[1]);
+      if (!user) {
+        ctx.status = 401;
+        ctx.body = {
+          error: 'Not logged in'
+        }
+        return;
+      }
+      ctx.status = 200;
+      ctx.body = {
+        token: cookie[1],
+        username: user.username,
+        id: user.id
+      };
+    } catch (e) {
+      ctx.status = 401;
+      ctx.body = {
+        error: 'Not logged in',
+        e: e
+      }
     }
   }
 
