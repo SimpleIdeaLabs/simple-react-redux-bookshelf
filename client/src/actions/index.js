@@ -137,3 +137,35 @@ export const getUserPosts = () => {
     payload: request
   }
 }
+
+export const getUsers = () => {
+  const request = axios.get(`/api/users`)
+    .then((response) => response.data);
+  return {
+    type: 'USER_LIST',
+    payload: request
+  }
+}
+
+export const clearUsersList = () => {
+  return {
+    type: 'CLEAR_USER_LIST',
+    payload: null
+  }
+}
+
+export const registerUser = (user) => {
+  const request = axios.post(`/api/users`, user).then((response) => response.data);
+  return {
+    type: 'USER_REGISTER',
+    payload: request
+  }
+}
+
+export const clearNewUser = () => {
+  return {
+    type: 'CLEAR_NEW_USER',
+    payload: null
+  }
+  
+}

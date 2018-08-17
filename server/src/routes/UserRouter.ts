@@ -25,7 +25,7 @@ export class UserRouter extends BaseRouter implements RouterInterface {
    */
   setUpRoutes(): void {
     this.router.prefix('/api/users');
-    this.router.get('/', LoggedInOnly, this.showList);
+    this.router.get('/', this.showList);
     this.router.get('/posts', this.getUserPosts);
     this.router.get('/:userId', this.getUser);
     this.router.post('/', this.saveUser);
